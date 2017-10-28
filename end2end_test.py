@@ -10,6 +10,7 @@ import time
 
 import docker
 import requests
+from simplejson.scanner import JSONDecodeError
 
 
 class Node(object):
@@ -108,8 +109,12 @@ def connect_nodes(image, port):
                                for cv in other_nodes]}
         r = requests.post('http://localhost:%s/nodes/register' %
                           v.port, json=json_data)
-        json_response = r.json()
-        assert len(json_response['total_nodes']) == len(other_nodes)
+        try:
+            json_response = r.json()
+            assert len(json_response['total_nodes']) == len(other_nodes)
+        except JSONDecodeError:
+            print(colored("Error parsing the response:", 'red'))
+            print(r.text)
 
     print(colored("All notes were successfully connected", 'green'))
 
