@@ -161,9 +161,9 @@ def sync_test(image, port):
                              other_node.port)
             message = r.json()['message']
             assert message == 'Our chain was replaced'
-        except Exception as e:
-            print(colored("Syncing '%s' failed:" % other_node.name, 'red'))
-            raise e
+        except JSONDecodeError:
+            print(colored("Error parsing the response:", 'red'))
+            print(r.text)
 
         r = requests.get('http://localhost:%s/chain' % other_node.port)
         other_node_updated_chain_length = r.json()['length']
