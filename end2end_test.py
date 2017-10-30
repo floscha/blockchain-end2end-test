@@ -190,6 +190,10 @@ if __name__ == '__main__':
     parser.add_argument('--tasks', dest='tasks', type=str, nargs='+',
                         required=True,
                         help='an integer for the accumulator')
+    parser.add_argument('--keepalive', action="store_true", dest='keep_alive',
+                        default=False,
+                        help='keeps the containers running after the script \
+                        finishes')
 
     args = parser.parse_args()
     image = args.image
@@ -197,6 +201,7 @@ if __name__ == '__main__':
     port = args.port
     network = args.net
     tasks = args.tasks
+    keep_alive = args.keep_alive
 
     print(colored("Script launched with the following tasks: %s" % tasks,
                   'yellow'))
@@ -217,3 +222,6 @@ if __name__ == '__main__':
 
     if 'sync-test' in tasks:
         sync_test(image, port)
+
+    if not keep_alive:
+        cleanup(image)
