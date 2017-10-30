@@ -25,5 +25,6 @@ Run the *end2end_test.py* script with the following arguments:
   - `setup`: Runs the specified number of blockchain nodes as Docker containers.
   - `connect`: Connect all nodes for implementations where nodes cannot find each other automatically.
   - `sync-test`: Test if the synchronization mechanism between nodes works.
+- `--keepalive`: Keeps the containers running after the script finishes.
 
 While the first four arguments can be left at their defaults for [Learn Blockchains by Building One](https://github.com/dvf/blockchain), the `--tasks` argument always has to be set.
